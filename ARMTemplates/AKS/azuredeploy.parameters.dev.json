@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceName": {
+            "value": "AKSTest"
+        },
+        "dnsPrefix": {
+            "value": "GEN-UNIQUE"
+        },
+        "existingServicePrincipalObjectId": {
+            "value": "bab2f979-7ee2-407a-bcf3-d2a5ef6d57ee"
+        },
+        "existingServicePrincipalClientId": {
+            "value": "3b77e7c5-f737-439d-bebf-86e989bdde85"
+        },
+        "existingServicePrincipalClientSecret": {
+            "value": "2vmoW-4P5pEO_1pOb2MHaS01tq.wSDJxTw"
+        },
+        "existingVirtualNetworkName": {
+            "value": "vnet"
+        },
+        "existingVirtualNetworkResourceGroup": {
+            "value": "LWSAKS"
+        },
+        "existingSubnetName": {
+            "value": "Subnet"
+        }
+    }
+}
