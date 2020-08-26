@@ -14,4 +14,5 @@ New-AzResourceGroupDeployment `
     -TemplateFile './azuredeploy.json' `
     -TemplateParameterFile './azuredeploy.parameters.dev.json'
 
+
 Remove-AzResourceGroup -Name $resourceGroupName -Force -AsJob
