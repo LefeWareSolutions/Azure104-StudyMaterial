@@ -31,7 +31,7 @@
           }
       },
       "agentCount": {
-          "defaultValue": 2,
+          "defaultValue": 1,
           "minValue": 1,
           "maxValue": 50,
           "type": "int",
@@ -154,7 +154,7 @@
       },
       "enablePrivateCluster": {
             "type": "bool",
-            "defaultValue": true,
+            "defaultValue": false,
             "metadata": {
                 "description": "Enable private network access to the Kubernetes cluster."
             }
