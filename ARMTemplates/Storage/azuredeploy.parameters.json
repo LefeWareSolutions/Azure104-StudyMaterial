@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "principalId": {
+            "value": "bab2f979-7ee2-407a-bcf3-d2a5ef6d57ee" // TODO: Fill in parameter value
+        },
+        "builtInRoleType": {
+            "value": "Contributor" // TODO: Fill in parameter value
+        },
+        "location": {
+            "value": "eastus" // TODO: Fill in parameter value
+        }
+    }
+}
