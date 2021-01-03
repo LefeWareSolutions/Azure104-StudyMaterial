@@ -1,4 +1,4 @@
-$subscriptionName = 'LefeWare-Learning-Development'
+$subscriptionName = 'LefeWare-Solutions'
 $location = "eastus"
 $resourceGroupName = "Test123"
 
@@ -13,7 +13,6 @@ Connect-AzAccount
 # Set Current Subscription Context
 $context = Get-AzSubscription -SubscriptionName $subscriptionName
 Set-AzContext $context
-
 New-AzResourceGroup -Name $resourceGroupName -Location $location
 
 
@@ -24,7 +23,7 @@ $virtualNetwork1 = New-AzVirtualNetwork `
   -Name $vnetName `
   -AddressPrefix 10.0.0.0/16
 
-#Enable service endpoint for Azure Storage on an existing virtual network and subnet.
+#Enable service endpoint for Azure Storage on specified vnet subnet.
 $subnetConfig = Add-AzVirtualNetworkSubnetConfig `
     -Name Subnet1 `
     -AddressPrefix 10.0.0.0/24 `
@@ -40,6 +39,11 @@ New-AzStorageAccount -ResourceGroupName $resourceGroupName `
   -SkuName $sku `
   -Kind StorageV2 `
   -AccessTier Hot
+
+Update-AzStorageAccountNetworkRuleSet `
+  -ResourceGroupName $resourceGroupName `
+  -Name $storageAccountName `
+  -DefaultAction Deny
 
 #Grant access from a virtual network
 $subnet = Get-AzVirtualNetwork -ResourceGroupName $resourceGroupName -Name $vnetName | Get-AzVirtualNetworkSubnetConfig -Name "Subnet1"

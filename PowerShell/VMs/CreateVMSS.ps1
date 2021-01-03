@@ -1,5 +1,5 @@
-$subscriptionName = 'LefeWare-Learning-Development'
-$resourceGroupName = "DEV-LefeWareLearning-VMSS"
+$subscriptionName = 'LefeWareSolutions-Production'
+$resourceGroupName = "AZ303"
 $scaleSetName = "myScaleSet"
 $location = "eastus"
 

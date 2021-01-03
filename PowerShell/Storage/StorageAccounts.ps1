@@ -1,8 +1,8 @@
-$subscriptionName = 'LefeWare-Learning-Development'
+$subscriptionName = 'LefeWareSolutions-Production'
 $location = "eastus"
-$resourceGroupName = "Development"
+$resourceGroupName = "Az303Test"
 
-$storageAccountName = "stlefewarelearningcms001"
+$storageAccountName = "stlefewaresolutions001"
 $sku = "Standard_LRS"
 
 # Connect to Azure 
@@ -11,6 +11,7 @@ Connect-AzAccount
 # Set Current Subscription Context
 $context = Get-AzSubscription -SubscriptionName $subscriptionName
 Set-AzContext $context
+New-AzResourceGroup -Name $resourceGroupName -Location $location
 
 # Create Storage account
 New-AzStorageAccount -ResourceGroupName $resourceGroupName `
@@ -32,6 +33,20 @@ Set-AzStorageAccount `
     -AccountName $storageAccountName `
     -AccessTier Cool
 
+#Create an Account SAS Token for Storage Account
+$storageAccount=Get-AzStorageAccount -ResourceGroupName $resourceGroupName -Name $storageAccountName      
+$context=$storageAccount.Context
+
+$sasToken = New-AzStorageAccountSASToken `
+  -Context $context `
+  -Service Blob,File,Table,Queue `
+  -ResourceType Service,Container,Object `
+  -Permission "racwdlup" `
+  -Protocol HttpsOnly `
+  -IPAddressOrRange 168.1.5.60-168.1.5.70
+
+
+ 
 #Delete Storage account
 Remove-AzStorageAccount `
     -Name $storageAccountName `
