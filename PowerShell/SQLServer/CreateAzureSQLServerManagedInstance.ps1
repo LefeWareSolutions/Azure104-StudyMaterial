@@ -8,6 +8,8 @@ Connect-AzAccount
 $context = Get-AzSubscription -SubscriptionName $subscriptionName
 Set-AzContext $context
 
+# Create a resource group
+$resourceGroup = New-AzResourceGroup -Name $resourceGroupName -Location $location
 
 $NSnetworkModels = "Microsoft.Azure.Commands.Network.Models"
 $NScollections = "System.Collections.Generic"
