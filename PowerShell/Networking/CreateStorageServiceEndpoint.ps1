@@ -1,6 +1,6 @@
 $subscriptionName = 'LefeWare-Solutions'
 $location = "eastus"
-$resourceGroupName = "Test123"
+$resourceGroupName = "Azure303"
 
 $vnetName = "VNet1"
 $subnetName = "subnet1"
