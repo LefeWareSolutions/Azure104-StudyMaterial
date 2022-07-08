@@ -1,4 +1,4 @@
-$subscriptionName = 'LefeWare-Learning-Development'
+$subscriptionName = 'LefeWareSolutions-Development'
 $resourceGroupName = "DEV-LefeWareLearning-WebApp"
 $VmName = "DEV-LefeWareLearning-VM"
 

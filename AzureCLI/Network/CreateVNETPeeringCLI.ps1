@@ -2,7 +2,7 @@ az login
 
 #Set Subscription
 az account list
-az account set --subscription "LefeWare-Learning-Development"
+az account set --subscription "LefeWareSolutions-Development"
 
 
 resourceGroupName="VNET-Peering-Group"
