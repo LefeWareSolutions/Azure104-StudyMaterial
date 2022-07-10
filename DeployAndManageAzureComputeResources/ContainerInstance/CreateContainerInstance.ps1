@@ -27,3 +27,6 @@ $containerGroup = New-AzContainerGroup `
 
 
 Get-AzContainerGroup -ResourceGroupName $resourceGroupName -Name $containerInstanceName
+
+
+az group delete --name $resourceGroupName --yes --no-wait
