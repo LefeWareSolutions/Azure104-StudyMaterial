@@ -1,5 +1,5 @@
 $location = "eastus"
-$resourceGroupName = "Azure303"
+$resourceGroupName = "Azure104"
 
 
 Connect-AzAccount
