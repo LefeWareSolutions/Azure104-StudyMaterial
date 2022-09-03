@@ -156,19 +156,24 @@ Create a custom backup
 By default, apps hosted in App Service are accessible directly through the internet and can reach only internet-hosted endpoints. But for many applications, control is needed for the inbound and outbound network traffic.
 
 Inbound features:
-- App-assigned address:
-- Access restrictions:
-- Service endpoints
-- Private endpoints
+- App-assigned address
+- Access restrrictions: Access restrictions let you filter inbound requests
+  - IP Based:restrict the IP addresses that can be used to reach your app
+  - Service endpoints: lock down inbound access to an app so that the source address must come from a set of selected subnets
+  - Service Tags:  resritct inbound access to well defined sets of IP addresses for Azure services. Service tags group the IP ranges used in various Azure services and is often also further scoped to specific regions. This allows you to filter inbound traffic from specific Azure services.
+![backup](./Images/Appservice/automaticbackup.png "backup")
+  - Header Filtering: Restrict traffic to requests with specific http headers
+
+- Private endpoints: Network interface that connects privately and securely to a Web App by Azure private link. Private endpoint uses a private IP address from the vnet, effectively bringing the web app into the vnet.
 
 Outbound features:
-- Hybrid Connections
-- Gateway-required virtual network integration
-- Virtual network integration
-
-
+- Hybrid Connections: Enables apps to make outbound calls to specified TCP endpoints. The endpoint can be on-premises, in a virtual network, or anywhere that allows outbound traffic to Azure on port 443. The relay agent "Hybrid Connection Manager" must be installed on a Windows Server 2012 or newer host to use.
+- Gateway-required virtual network integration: Enables apps to make outbound requests into another Azure VNet. The feature works by connecting the host the app is running on to a Virtual Network gateway on your virtual network by using a point-to-site VPN. Best serverd for accessing resources in cross region virtual networks that aren't peered to a virtual network in the region.
+![gateway](./Images/Appservice/gateway.png "gateway")
+- Virtual network integration: enables placing the backend of an app in a subnet in a VNet in the same region as the app. Allows access resources in the same VNet,resources in peered VNet, including cross region connections.
+![vnet-integration](./Images/Appservice/vnet-integration.png "vnet-integration")
 &nbsp;
 
 ### Configure deployment settings  
-
+The deployment mechanism is the action used to put a built application into the /home/site/wwwroot directory of the web app. The /wwwroot directory is a mounted storage location shared by all instances of the web app. When the deployment mechanism puts the application in this directory, the instances receive a notification to sync the new files. 
 &nbsp;
