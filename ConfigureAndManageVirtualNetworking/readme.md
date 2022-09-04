@@ -20,13 +20,33 @@ Other key points for peering:
 See ./Networking/Peering for examples
 
 ### Configure private and public IP addresses  
-Both Private and Public IP addresses can be assigned to a virtual machine's network interface controller (NIC). Private IP addresses assigned to a network interface enable a virtual machine to communicate with other resources in an Azure virtual network and connected networks. A private IP address also enables outbound communication to the Internet using an unpredictable IP address. A Public IP address assigned to a network interface enables inbound communication to a virtual machine from the Internet and enables outbound communication from the virtual machine to the Internet using a predictable IP address. 
+Private IP addresses allow communicate between resources in an Azure virtual network and connected networks. A private IP address also enables outbound communication to the Internet using an unpredictable IP address. Services that use a private IP addresses in Azure are as follows:
+- Virtual Machine Network Interface
+- Internal Load Balncers
+- Application Gateway
+
+A Public IP address assigned to an Azure resource enables inbound communication to a virtual machine from the Internet and enables outbound communication from the virtual machine to the Internet using a predictable IP address. Some of the resources you can associate a public IP address resource with:
+- Virtual machine network interfaces
+- Virtual machine scale sets
+- Public Load Balancers
+- Virtual Network Gateways (VPN/ER)
+- NAT gateways
+- Application Gateways
+- Azure Firewall
+- Bastion Host
+- Route Server
+
 ### Configure user-defined network routes  
+Azure routes outbound traffic from a subnet based on the routes in a subnet's route table. 
+
+
+
+Below are the two types of routing:
 
 **System Routes:**
 Azure automatically creates a route table for each subnet within an Azure virtual network and adds system default routes to the table.
 
-Each route contains an address prefix and next hop type. When traffic leaving a subnet is sent to an IP address within the address prefix of a route, the route that contains the prefix is the route Azure uses
+Each route contains an address prefix and next hop type. When traffic leaving a subnet is sent to an IP address within the address prefix (CIDR Range) of a route, the route that contains the prefix is the route Azure uses
 
  ![SystemRouteTable](./Images/systemroutetable.png "SystemRouteTable")
 
@@ -38,18 +58,20 @@ These Azure's system routes can be overriden with custom routes, and add more cu
 - None: Used when wanting to drop traffic to an address prefix, rather than forwarding the traffic to a destination
 - Virtual network: Specify when overriding the default routing within a virtual network
 - Internet: Specify when wanting to explicitly route traffic destined to an address prefix to the Internet, or for traffic destined for Azure services with public IP addresses kept within the Azure backbone network.
+- Service Tag: Specify a service tag as the address prefix for a user-defined route instead of an explicit IP range
 
-
+**How Azure Determines Routing:**
+When outbound traffic is sent from a subnet, Azure selects a route based on the destination IP address, using the longest prefix match algorithm.One route specifies the 10.0.0.0/24 address prefix, while the other route specifies the 10.0.0.0/16 address prefix. Azure routes traffic destined for 10.0.0.5, to the next hop type specified in the route with the 10.0.0.0/24 address prefix, because 10.0.0.0/24 is a longer prefix than 10.0.0.0/16, even though 10.0.0.5 is within both address prefixes. 
 ### Implement subnets  
 
-### configure endpoints on subnets  
+### Configure endpoints on subnets  
 
 ### configure private endpoints  
 
 ### configure Azure DNS, including custom DNS settings and private or public DNS zones  
 
- 
-##Secure access to virtual networks  
+ ---
+## Secure access to virtual networks  
 
 ### create security rules  
 
