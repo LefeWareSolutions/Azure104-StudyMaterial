@@ -62,11 +62,43 @@ These Azure's system routes can be overriden with custom routes, and add more cu
 
 **How Azure Determines Routing:**
 When outbound traffic is sent from a subnet, Azure selects a route based on the destination IP address, using the longest prefix match algorithm.One route specifies the 10.0.0.0/24 address prefix, while the other route specifies the 10.0.0.0/16 address prefix. Azure routes traffic destined for 10.0.0.5, to the next hop type specified in the route with the 10.0.0.0/24 address prefix, because 10.0.0.0/24 is a longer prefix than 10.0.0.0/16, even though 10.0.0.5 is within both address prefixes. 
-### Implement subnets  
 
-### Configure endpoints on subnets  
+
+**Creating a User Defined Route in Azure:**
+See ConfigureAndManageVirtualNetworking/Networking/UserDefinedRoute/UserDefinedRouteTable.ps1
+ ![AzureUserDefinedRoute](./Images/AzureUserDefinedRoute.png "AzureUserDefinedRoute")
+
+### Implement subnets  
+All Azure resources deployed into a virtual network are deployed into a subnet within a virtual network.
+
+### Configure Service endpoints on subnets  
+Service endpoints allow secure and direct connectivity to specific Azure resources over an optimized route over the Azure backbone network, thus traffic never traverses over the public internet. In other words it allow private IP addresses in a specific subnet to reach the endpoint of an Azure service without needing a public IP address on the VNet
+
+When allowing a subnet to access service endpoints for a service, the subnet must enable those specifc type(s) of services in order to allow egress traffic.
+
+ ![subnetserviceendpoint](./Images/ServiceEndpoints/subnetserviceendpoint.png "subnetserviceendpoint")
+
+On the other end, for the service that has incoming traffic, we must enable only selected networks and add a "Virtual Network Rule" for the VNet which should be allowing traffic from. In other words we are **restricting** traffic from that VNet.
+
+ ![StorageAccountNetworking](./Images/ServiceEndpoints/StorageAccountNetworking.png "StorageAccountNetworking")
+
+For example, on Subnet A, we allow the "Microsoft.Storage" Service Endpoints, allowing the private resources inside the subnet to communicate with storage accounts that reside outside of the private network. For the storage account, we create a network rule, saying only allow traffic from that specific network.
+
+ ![serviceendpoint](./Images/ServiceEndpoints/serviceendpoint.png "serviceendpoint")
+
+Service Endpoints are available for the following services along with the name of the service type to be enabled
+- Azure Storage (Microsoft.Storage)
+- Azure SQL Database, Azure Synapse Analytics, Azure Database for PostgreSQL, Azure Database for MySQL server, Azure Database for MariaDB(Microsoft.Sql)
+- Azure Cosmos DB (Microsoft.AzureCosmosDB)
+- Azure Key Vault (Microsoft.KeyVault)
+- Azure Service Bus (Microsoft.ServiceBus)
+- Azure Event Hubs (Microsoft.EventHub)
+- Azure Data Lake Store Gen 1 (Microsoft.AzureActiveDirectory)
+- Azure App Service (Microsoft.Web)
+- Azure Cognitive Services (Microsoft.CognitiveServices)
 
 ### configure private endpoints  
+A private endpoint is a network interface that uses a private IP address from the actual virtual network. This network interface connects privately and securely to a service that's powered by Azure Private Link. By enabling a private endpoint, it is essentially bringing the service into the virtual network.
 
 ### configure Azure DNS, including custom DNS settings and private or public DNS zones  
 
