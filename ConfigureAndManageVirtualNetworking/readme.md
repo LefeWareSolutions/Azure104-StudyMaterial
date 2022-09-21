@@ -134,12 +134,45 @@ A DNS zone is used to host the DNS records for a particular domain. To host a do
 ## Secure access to virtual networks  
 
 ### Create security rules  
-You can use an Azure network security group to filter network traffic between Azure resources in an Azure virtual network. A network security group contains security rules that allow or deny inbound network traffic to, or outbound network traffic from, several types of Azure resources. For each rule, you can specify source and destination, port, and protocol.
-### associate a network security group (NSG) to a subnet or network interface  
+Azure network security groups (NSGs) can filter network traffic between Azure resources in an Azure virtual network. An NSG contains security rules that allow or deny inbound network traffic to, or outbound network traffic from, several types of Azure resources. Each rule allows specifying source and destination, port, and protocol.
 
-### evaluate effective security rules  
+- Name:	A unique name within the network security group.
+- Priority:	A number between 100 and 4096. Rules are processed in priority order, with lower numbers processed before higher numbers, because lower numbers have higher priority. Once traffic matches a rule, processing stops. 
+- Source or destination:	Any, or an individual IP address, CIDR block (eg. 10.0.0.0/24), service tag, or application security group.
+- Protocol	TCP, UDP, ICMP, ESP, AH, or Any.
+- Direction:	Whether the rule applies to inbound, or outbound traffic.
+- Port range:	Specify an individual or range of ports (eg. 80 or 10000-10005). 
+- Action:	Allow or deny
 
-### implement Azure Firewall 
+ ![NSGrules](./Images/NSG/NSGrules.png "NSGrules")
+
+### Associate a network security group (NSG) to a subnet or network interface  
+It is possible to associate zero, or one, network security group to each **VNet subnet** and **network interface**in a virtual machine. The same network security group can be associated to as many subnets and network interfaces as you choose.
+
+The following picture illustrates different scenarios for how network security groups might be deployed to allow network traffic to and from the internet over TCP port 80:
+
+ ![NSGApply](./Images/NSG/NSGApply.png "NSGApply")
+
+Inbound Rules:
+- VM1: The security rules in NSG1 are processed first, since it's associated to Subnet1 and VM1 is in Subnet1. Unless a rule has been created that allows port 80 inbound, the traffic is denied by the default DenyAllInbound default security rule, and never evaluated by NSG2, since NSG2 is associated to the network interface. If NSG1 has a security rule that allows port 80, the traffic is then processed by NSG2 associated to NIC1. To allow port 80 to the virtual machine, both NSG1 and NSG2 must have a rule that allows port 80 from the internet.
+
+- VM2: The rules in NSG1 are processed because VM2 is also in Subnet1. Since VM2 doesn't have a network security group associated to its network interface, it receives all traffic allowed through NSG1 or is denied all traffic denied by NSG1. 
+
+Outbound Rules:
+- VM1: The security rules in NSG2 are processed first. Unless a security rule that denies port 80 outbound to the internet was created, the traffic is allowed by the AllowInternetOutbound default security rule in both NSG1 and NSG2. If NSG2 has a security rule that denies port 80, the traffic is denied, and never evaluated by NSG1. To deny port 80 from the virtual machine, either, or both of the network security groups must have a rule that denies port 80 to the internet.
+
+- VM2: All traffic is sent through the network interface to the subnet, since the network interface attached to VM2 doesn't have a network security group associated to it. The rules in NSG1 are processed.
+
+Intra-Subnet Traffic
+-  If a rule is added to *NSG1 that denies all inbound and outbound traffic, VM1 and VM2 will no longer be able to communicate with each other.
+
+### Implement Azure Firewall 
+Azure Firewall is a cloud-native and intelligent network firewall security service that provides threat protection for cloud workloads running in Azure. It's a fully stateful, firewall as a service with built-in high availability and unrestricted cloud scalability. It provides both east-west and north-south traffic inspection.
+
+Azure Firewall is offered in two SKUs: Standard and Premium.
+
+
+
 
 ### implement Azure Bastion  
 
