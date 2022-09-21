@@ -97,16 +97,44 @@ Service Endpoints are available for the following services along with the name o
 - Azure App Service (Microsoft.Web)
 - Azure Cognitive Services (Microsoft.CognitiveServices)
 
-### configure private endpoints  
-A private endpoint is a network interface that uses a private IP address from the actual virtual network. This network interface connects privately and securely to a service that's powered by Azure Private Link. By enabling a private endpoint, it is essentially bringing the service into the virtual network.
+### Configure private endpoints  
+A private endpoint is a network interface that uses a private IP address from the actual virtual network. This network interface connects privately and securely to a service that's connected by 'Azure Private Link'. By enabling a private endpoint, it is essentially bringing the service into the virtual network.Traffic between the virtual network and the service travels the Microsoft backbone network with exposing the service to the public internet. 
 
-### configure Azure DNS, including custom DNS settings and private or public DNS zones  
+ ![PrivateEndpoint](./Images/PrivateEndpoints/PrivateEndpoint.png "PrivateEndpoint")
 
+Private endpoints provide a privately accessible IP address for the Azure service, but do not necessarily restrict public network access to it. Azure App Service and Azure Functions become inaccessible publicly when they are associated with a private endpoint. **All other Azure services require additional access controls**. 
+
+ ![PrivateEndpointResources](./Images/PrivateEndpoints/PrivateEndpointResources.png "PrivateEndpointResources")
+
+ To connect to an Azure service over private endpoint, separate DNS settings, often configured via private DNS zones, are required. The settings must resolve to the private IP address of the private endpoint. The network interface associated with the private endpoint contains the information that's required to configure your DNS including the private IP address for a private-link resource.
+
+**DNS Group:**
+If integrating a private endpoint with a private DNS zone, a private DNS zone group is also created. The DNS zone group is a strong association between the private DNS zone and the private endpoint that helps auto-updating the private DNS zone when there is an update on the private endpoint
+
+
+### Configure Azure DNS, including custom DNS settings and private or public DNS zones  
+The Domain Name System, or DNS, is responsible for translating (or resolving) a service name to an IP address. Azure DNS is a hosting service for domains and provides naming resolution using the Microsoft Azure infrastructure.
+
+**Public DNS:**
+Azure DNS provides a globally distributed and high-availability name server infrastructure that you can be used to host, but not purchase a domain. By hosting domains in Azure DNS,  DNS records can be managed with the same credentials, APIs, tools, billing, and support as your other Azure services
+
+**Private DNS:**
+Azure Private DNS provides a reliable and secure DNS service for virtual networks. Azure Private DNS manages and resolves domain names in the virtual network without the need to configure a custom DNS solution. By using private DNS zones, custom domain names can be used instead of the Azure-provided names during deployment. Using a custom domain name you tailor your virtual network architecture to best suit your organization's needs and provides easy to remember naming resolution for resources within a virtual network and connected virtual networks. 
+
+**DNS Zones:**
+A DNS zone is used to host the DNS records for a particular domain. To host a domain in Azure DNS, a DNS zone for that domain name must be created where each DNS record for that domain is then created inside this DNS zone. For example, the domain 'contoso.com' may contain several DNS records, such as 'mail.contoso.com' (for a mail server) and 'www.contoso.com' (for a web site).
+ ![PrivateDNS](./Images/DNS/PrivateDNS.png "PrivateDNS")
+
+
+- When creating a DNS zone in Azure DNS, the name of the zone must be unique within the resource group, and the zone must not exist already. Otherwise, the operation fails. The same zone name can be reused in a different resource group or a different Azure subscription. 
+- To resolve the records of a private DNS zone from your virtual network, the vnet must be linked with the zone. Linked virtual networks have full access and can resolve all DNS records published in the private zone. 
+- Enabling autoregistration on a virtual network link allows for  DNS records for VMs in that network to auto register in the private zone
+ ![PrivateDNSZone](./Images/DNS/PrivateDNSZone.png "PrivateDNSZone")
  ---
 ## Secure access to virtual networks  
 
-### create security rules  
-
+### Create security rules  
+You can use an Azure network security group to filter network traffic between Azure resources in an Azure virtual network. A network security group contains security rules that allow or deny inbound network traffic to, or outbound network traffic from, several types of Azure resources. For each rule, you can specify source and destination, port, and protocol.
 ### associate a network security group (NSG) to a subnet or network interface  
 
 ### evaluate effective security rules  
