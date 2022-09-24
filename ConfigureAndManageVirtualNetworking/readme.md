@@ -167,13 +167,14 @@ Intra-Subnet Traffic
 -  If a rule is added to *NSG1 that denies all inbound and outbound traffic, VM1 and VM2 will no longer be able to communicate with each other.
 
 ### Implement Azure Firewall 
-Azure Firewall is a cloud-native and intelligent network firewall security service that provides threat protection for cloud workloads running in Azure. It's a fully stateful, firewall as a service with built-in high availability and unrestricted cloud scalability. It provides both east-west and north-south traffic inspection.
+Controlling outbound network access is an important part of an overall network security plan. For example, limit access to web sites or limiting the outbound IP addresses and ports that can be accessed. One way to control inbound/outbound network access from an Azure subnet is with Azure Firewall and Firewall Policy. 
 
-Azure Firewall is offered in two SKUs: Standard and Premium.
+With Azure Firewall and Firewall Policy, its possible to configure:
+- Application rules that define fully qualified domain names (FQDNs) that can be accessed from a subnet.
+- Network rules that define source address, protocol, destination port, and destination address.
 
-
-
-
+Network traffic is subjected to the configured firewall rules when network traffic is routed to the firewall as the subnet's default gateway.
+ ![firewall-standard](./Images/Firewall/firewall-standard.png "firewall-standard")
 ### implement Azure Bastion  
 
  
