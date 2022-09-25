@@ -167,14 +167,26 @@ Intra-Subnet Traffic
 -  If a rule is added to *NSG1 that denies all inbound and outbound traffic, VM1 and VM2 will no longer be able to communicate with each other.
 
 ### Implement Azure Firewall 
-Controlling outbound network access is an important part of an overall network security plan. For example, limit access to web sites or limiting the outbound IP addresses and ports that can be accessed. One way to control inbound/outbound network access from an Azure subnet is with Azure Firewall and Firewall Policy. 
+Microsoft’s Azure Firewall is a cloud-native security solution for Azure environments. It provides traffic inspection, filtering, and monitoring. Azure Firewall denies all traffic by default, until rules are manually configured to allow traffic.
 
-With Azure Firewall and Firewall Policy, its possible to configure:
-- Application rules that define fully qualified domain names (FQDNs) that can be accessed from a subnet.
-- Network rules that define source address, protocol, destination port, and destination address.
+Unlike an NSG, which is more targeted and is deployed to particular subnets and/or network interfaces, an Azure Firewall monitors traffic more broadly. Applying rules based on IP addresses, port numbers, networks, and subnets is possible with both firewall and NSG. Additionally, NSGs do not offer a threat-intelligence-based filtering option, but Azure Firewall does.
 
-Network traffic is subjected to the configured firewall rules when network traffic is routed to the firewall as the subnet's default gateway.
  ![firewall-standard](./Images/Firewall/firewall-standard.png "firewall-standard")
+
+Ountbound Firewall Policies:
+- Application rules:  Define fully qualified domain names (FQDNs) that can be outbound accessed from a subnet.
+ ![applicationrules](./Images/Firewall/applicationrules.png "applicationrules")
+
+- Network rules: that define source address, protocol, destination port, and destination address.
+ ![networkRules](./Images/Firewall/networkRules.png "networkRules")
+Network traffic is subjected to the configured firewall rules when network traffic is routed to the firewall as the subnet's default gateway.
+
+All outbound virtual network traffic IP addresses are translated to the Azure Firewall public IP (Source Network Address Translation). 
+
+Inbound Firewall Policies:
+- Inbound DNAT: Inbound Internet network traffic to your firewall public IP address is translated (Destination Network Address Translation) and filtered to the private IP addresses on your virtual networks.
+![dnatrules](./Images/Firewall/dnatrules.png "dnatrules")
+
 ### implement Azure Bastion  
 
  
