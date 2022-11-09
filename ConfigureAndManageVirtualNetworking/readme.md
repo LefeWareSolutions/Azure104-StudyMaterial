@@ -187,18 +187,52 @@ Inbound Firewall Policies:
 - Inbound DNAT: Inbound Internet network traffic to your firewall public IP address is translated (Destination Network Address Translation) and filtered to the private IP addresses on your virtual networks.
 ![dnatrules](./Images/Firewall/dnatrules.png "dnatrules")
 
-### implement Azure Bastion  
+### Implement Azure Bastion  
+Azure Bastion is a service that allows connecting to a virtual machine using a browser and the Azure portal, or via the native SSH or RDP client already installed on a local computer. The Azure Bastion service is a fully platform-managed PaaS service that is provisioned inside a virtual network. It provides secure and seamless RDP/SSH connectivity to VMs directly from the Azure portal over TLS. When connecting via Azure Bastion, the virtual machines don't need a public IP address, agent, or special client software.
 
- 
+![BastionHost](./Images/BastionHost.png "BastionHost")
+
+There is no need to apply any NSGs to the Azure Bastion subnet because Azure Bastion connects to a virtual machines over private IP. Therefore instead, configure NSGs to allow RDP/SSH from Azure Bastion only.
 
 ## Configure load balancing  
 
-### configure Azure Application Gateway 
+### Configure Azure Application Gateway 
+Azure Application Gateway is a web traffic load balancer that enables to managing traffic to web applications. Traditional load balancers operate at the transport layer (OSI layer 4 - TCP and UDP) and route traffic based on source IP address and port, to a destination IP address and port.
 
-### configure an internal or public load balancer  
+Application Gateway can make routing decisions based on additional attributes of an HTTP request, for example URI path or host headers. For example, you can route traffic based on the incoming URL. So if /images is in the incoming URL, you can route traffic to a specific set of servers (known as a pool) configured for images. If /video is in the URL, that traffic is routed to another pool that's optimized for videos.
+
+![applicationGateway](./Images/LoadBalancing/applicationGateway.png "applicationGateway")
+
+The AppGW v2 SKU includes the following freature:
+- Autoscaling: Application Gateway or WAF deployments under the autoscaling SKU can scale out or in based on changing traffic load patterns.
+- Zone redundancy: An Application Gateway or WAF deployment can span multiple Availability Zones, removing the need to provision separate Application Gateway instances in each zone with a Traffic Manager. 
+- Static VIP: Application Gateway v2 SKU supports the static VIP type exclusively. This ensures that the VIP associated with the application gateway doesn't change for the lifecycle of the deployment, even after a restart. 
+- Header Rewrite: Application Gateway allows you to add, remove, or update HTTP request and response headers with v2 SKU. 
+- Key Vault Integration: Application Gateway v2 supports integration with Key Vault for server certificates that are attached to HTTPS enabled listeners.
+- Mutual Authentication (mTLS): Application Gateway v2 supports authentication of client requests. 
+- Azure Kubernetes Service Ingress Controller: The Application Gateway v2 Ingress Controller allows the Azure Application Gateway to be used as the ingress for an AKS cluster
+- Private link: offers private connectivity from other virtual networks in other regions and subscriptions through the use of private endpoints.
+- Performance enhancements: Offers up to 5X better TLS offload performance as compared to the Standard/WAF SKU.
+-Faster deployment and update time The v2 SKU provides faster deployment and update time as compared to Standard/WAF SKU. 
+
+### Configure an internal or public load balancer  
+Azure Load Balancer operates at layer 4 of the Open Systems Interconnection (OSI) model by distributing inbound flows that arrive at the load balancer's front end to backend pool instances. 
+
+- Azure Load Balancer rules require a health probe to detect the endpoint status. The configuration of the health probe and probe responses determines which backend pool instances will receive new connections. Use health probes to detect the failure of an application.
+- The backend pool instances can be Azure Virtual Machines or instances in a virtual machine scale set.
+
+A public load balancer provides outbound connections to virtual machines (VMs) inside a virtual network. These connections are accomplished by translating their private IP addresses to public IP addresses. Public Load Balancers are used to load balance internet traffic to VMs.
+
+An internal (or private) load balancer is used where private IPs are needed at the frontend only. Internal load balancers are used to load balance traffic inside a virtual network. A load balancer frontend can be accessed from an on-premises network in a hybrid scenario.
+
+![load-balancer](./Images/LoadBalancing/load-balancer.svg "load-balancer")
+
 
 ### troubleshoot load balancing  
-
+When the Load Balancer connectivity is unavailable, the most common symptoms are as follows:
+- VMs behind the Load Balancer aren't responding to health probes
+- VMs behind the Load Balancer aren't responding to the traffic on the configured port
+When the external clients to the backend VMs go through the load balancer, the IP address of the clients will be used for the communication. Make sure the IP address of the clients are added into the NSG allow list.
  
 
 ## Monitor and troubleshoot virtual networking  

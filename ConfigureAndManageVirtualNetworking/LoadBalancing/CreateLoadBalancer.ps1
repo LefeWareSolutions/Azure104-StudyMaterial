@@ -6,7 +6,6 @@ $loc = 'eastus'
 Connect-AzAccount
 New-AzResourceGroup -Name $rg -Location $loc
 
-#---------------------------------------------------------------LOAD BALANCER CONFIG-----------------------------------------------------------#
 $pubIP = 'myPublicIP'
 $fe = 'myFrontEnd'
 $be = 'myBackEndPool'
