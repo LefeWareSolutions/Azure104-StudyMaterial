@@ -237,12 +237,52 @@ When the external clients to the backend VMs go through the load balancer, the I
 
 ## Monitor and troubleshoot virtual networking  
 
-### monitor on-premises connectivity  
+### Configure and use Azure Monitor for Networks  
+Azure Monitor Network Insights provides a comprehensive and visual representation through topologies, of health and metrics for all deployed network resources, without requiring any configuration. It also provides access to network monitoring capabilities like Connection Monitor, flow logging for network security groups (NSGs), and Traffic Analytics. And it provides other network diagnostic features.
 
-### configure and use Azure Monitor for Networks  
+**Topology:** \
+Topology helps visualize how resources are configured through graphic representation of the entire hybrid network for understanding network configuration. Topology is a unified visualization tool for resource inventory and troubleshooting. It provides an interactive interface to view resources and their relationships in Azure, spanning across multiple subscriptions, resource groups, and locations. 
 
+![topology](./Images/Monitor/topology.png "topology")
+
+**Network health and metrics:**\
+The Azure Monitor Network Insights Overview page provides an easy way to visualize the inventory networking resources, together with resource health and alerts. It's divided into four key functional areas: 
+
+- Search and filtering: Customize the resource health and alerts view by using filters like Subscription, Resource Group, and Type.
+- Resource health and metrics: Each tile on the page displays the number of instances of that resource type deployed across all selected subscriptions. It also displays the health status of the resource. Selecting any item in the grid view brings up Health column to get resource health for that connection
+- Alerts: The Alert box on the right side of the page provides a view of all alerts generated for the selected resources across all subscriptions.
+- Resource view: The Resource view helps you visualize how a resource is configured. The Resource view is currently available for Azure Application Gateway, Azure Virtual WAN, and Azure Load Balancer.
+
+![filter](./Images/Monitor/filter.png "filter")
+
+Connectivity:
+
+Traffic:
+
+Diagnostic Toolkit:
+
+---
 ### use Azure Network Watcher  
+Azure Network Watcher provides tools to monitor, diagnose, view metrics, and enable or disable logs for resources in an Azure virtual network. Network Watcher is designed to monitor and repair the network health of IaaS (Infrastructure-as-a-Service) products including Virtual Machines (VM), Virtual Networks, Application Gateways, Load balancers, etc.
 
+Monitor:
+
+![networkwatcher](./Images/NetworkWatcher/networkwatcherMonitor.png "networkwatcher")
+
+- **Connection Monitor**: 
+
+
+- **Topology**: The topology capability allows generating a visual diagram of the resources in a virtual network and the relationships between the resources. 
+
+![networktopology](./Images/NetworkWatcher/topology.png "networktopology")
+
+Diagnose:
+
+Metrics:
+
+Logs:
+
+ ---
 ### troubleshoot external networking 
 
 ### troubleshoot virtual network connectivity  
@@ -252,6 +292,8 @@ When the external clients to the backend VMs go through the load balancer, the I
 ## Integrate an on-premises network with an Azure virtual network  
 
 ### create and configure Azure VPN Gateway 
+
+### Monitor on-premises connectivity  
 
 ### create and configure Azure ExpressRoute  
 
