@@ -255,39 +255,64 @@ The Azure Monitor Network Insights Overview page provides an easy way to visuali
 
 ![filter](./Images/Monitor/filter.png "filter")
 
-Connectivity:
+**Connectivity:**\
+The Connectivity tab provides an easy way to visualize all tests configured via Connection Monitor for the selected set of subscriptions. Reachable settings provide easy access to configurations for your reachability criteria, based on checks failed (%) and RTT (ms).
+![connectivity](./Images/Monitor/connectivity.png "connectivity")
 
-Traffic:
 
-Diagnostic Toolkit:
+**Traffic:**\
+The Traffic tab provides access to all NSGs configured for NSG flow logs and Traffic Analytics for the selected set of subscriptions, grouped by location. Traffic Analytics provides rich analytics and visualization derived from NSG flow logs and other Azure resources' data
+
+The tiled regional view displays all NSGs along with the NSG flow logs and Traffic Analytics configuration status. If a region tile is selected, a grid view appears that provides NSG flow logs and Traffic Analytics in a view that's easy to read and configure:
+![traffic](./Images/Monitor/traffic.png "traffic")
+
+
+**Diagnostic Toolkit:**\
+Diagnostic Toolkit provides access to all  diagnostic features available for troubleshooting an azure network. The drop-down list can be used to access features like packet capture, VPN troubleshooting, connection troubleshooting, next hop, and IP flow verify
+
 
 ---
-### use Azure Network Watcher  
+### Use Azure Network Watcher  
 Azure Network Watcher provides tools to monitor, diagnose, view metrics, and enable or disable logs for resources in an Azure virtual network. Network Watcher is designed to monitor and repair the network health of IaaS (Infrastructure-as-a-Service) products including Virtual Machines (VM), Virtual Networks, Application Gateways, Load balancers, etc.
 
-Monitor:
+**Monitor:** 
 
 ![networkwatcher](./Images/NetworkWatcher/networkwatcherMonitor.png "networkwatcher")
 
-- **Connection Monitor**: 
+- **Connection Monitor**: Monitors communication at a regular interval and informs of reachability, latency, and network topology changes between the VM and the endpoint. For example, a web server VM that communicates with a database server. If an endpoint becomes unreachable, connection troubleshoot notifies of the reason. Potential reasons are a DNS name resolution problem, the CPU, memory, or firewall within the operating system of a VM, or the hop type of a custom route, or the security rule for the VM or subnet of the outbound connection
 
+- **Network Performance Monitor**: A cloud-based hybrid network monitoring solution that helps monitor network performance between various points from withinin a network infrastructure. It also helps monitor network connectivity to service and application endpoints and monitor the performance of Azure ExpressRoute detecting network issues like traffic blackholing, routing errors, and issues that conventional network monitoring methods aren't able to detect.
 
-- **Topology**: The topology capability allows generating a visual diagram of the resources in a virtual network and the relationships between the resources. 
+- **Topology**: Allows generating a visual diagram of the resources in a virtual network and the relationships between the resources. 
 
 ![networktopology](./Images/NetworkWatcher/topology.png "networktopology")
 
-Diagnose:
+**Diagnose:**\
+![Diagnose](./Images/NetworkWatcher/Diagnose.png "Diagnose")
 
-Metrics:
+- **IP flow verify:** checks if a packet is allowed or denied to or from a virtual machine based on 5-tuple information. The security group decision and the name of the rule that denied the packet is returned.
+- **Network Security Group (NSG) Diagnostics tool:** Provides detailed information to understand and debug the security configuration of your network. For a given source-destination pair, the API returns all NSGs that will be traversed, the rules that will be applied in each NSG and the final allow/deny status for the flow.
+- **Next Hop:** Provides the next hop from the target virtual machine to the destination IP address.
+- **VPN Troubleshoot:** Diagnoses the health of the virtual network gateway or connection. 
+- **Packet Capture:** Captures can be stored in Azure Storage, on a VM's disk, or both. The capture file can then be analyze using several standard network capture analysis tools
+- **Network Watcher Connection Troubleshoot**: Provides the capability to check a direct TCP connection from a virtual machine (VM) to a VM, fully qualified domain name (FQDN), URI, or IPv4 address. 
 
-Logs:
+**Metrics:**\
+There are limits to the number of network resources that can be created within an Azure subscription and region. The network subscription limit capability provides a summary of how many of each network resource have been deployed in a subscription and region, and what the limit is for the resource. 
 
- ---
-### troubleshoot external networking 
+![subscription-limit](./Images/NetworkWatcher/subscription-limit.png "subscription-limit")
 
-### troubleshoot virtual network connectivity  
+**Logs:**\
+![logs](./Images/NetworkWatcher/logs.png "logs")
 
- 
+- **NSG flow logs:** allows logging the source and destination IP address, port, protocol, and whether traffic was allowed or denied by an NSG. The logs can be analyzed using a variety of tools, such as Power BI and the traffic analytics capability.
+
+- **Diagnostic Logs:** Provides a single interface to enable and disable network resource diagnostic logs for any existing network resource that generates a diagnostic log. The diagnostic logs can be viewerd using tools such as Microsoft Power BI and Azure Monitor logs.
+
+- **Traffic Analytics:** Provides visibility into user and application activity in cloud networks. Specifically, traffic analytics analyzes Azure Network Watcher network security group (NSG) flow logs to provide insights into traffic flow in your Azure cloud
+![traffic-analytics](./Images/NetworkWatcher/traffic-analytics.png "traffic-analytics")
+
+---
 
 ## Integrate an on-premises network with an Azure virtual network  
 
