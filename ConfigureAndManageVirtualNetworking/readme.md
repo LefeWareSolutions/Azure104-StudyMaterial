@@ -360,4 +360,4 @@ Azure Virtual WAN is a networking service that brings many networking, security,
 The Virtual WAN architecture is a hub and spoke architecture with scale and performance built in for branches (VPN/SD-WAN devices), users (Azure VPN/OpenVPN/IKEv2 clients), ExpressRoute circuits, and virtual networks. It enables a global transit network architecture, where the cloud hosted network 'hub' enables transitive connectivity between endpoints that may be distributed across different types of 'spokes'.
 
 
-![virtualwan](./Images/OnPrem/virtualwan.png "virtualwan")
+![virtualwan](https://learn.microsoft.com/en-us/azure/virtual-wan/media/virtual-wan-about/virtualwan1.png "virtualwan")
