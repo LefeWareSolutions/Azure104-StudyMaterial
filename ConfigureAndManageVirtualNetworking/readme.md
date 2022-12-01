@@ -315,11 +315,49 @@ There are limits to the number of network resources that can be created within a
 ---
 
 ## Integrate an on-premises network with an Azure virtual network  
+There are three options for connecting an on-premises network to an Azure Virtual Network:
+- VPN connection
+- Express Route
+- ExpressRoute with VPN failover
 
-### create and configure Azure VPN Gateway 
+### Create and configure Azure VPN Gateway   
+A VPN gateway is a specific type of **virtual network gateway** that is used to send encrypted traffic between an Azure virtual network and an on-premises location over the public Internet. Each virtual network can have only one VPN gateway that allows multiple connections to the same VPN gateway. 
+ 
+There are multiple VPN Connectivity types outlined below:
+
+- **VNet-to-VNet VPN Connection (IPsec/IKE VPN tunnel):** Allows connecting VNets from different regions, different subscriptions and different tenats. This type of configuration creates a connection between two virtual network gateways. 
+  - Both connectivity types use a VPN gateway to provide a secure tunnel using IPsec/IKE. 
+
+![vnet-to-vnet](./Images/OnPrem/vnet-to-vnet.png "vnet-to-vnet")
+
+- ***Site-to-Site Connection (S2S):*** A connection type used to connect an on-premises network to an Azure virtual network over an IPsec/IKE (IKEv1 or IKEv2) VPN tunnel. This type of connection requires a VPN device located on-premises that has an externally facing public IP address assigned to it. 
+
+![site-to-site](./Images/OnPrem/site-to-site.png "site-to-site")
+
+- ***Point-to-Site (P2S):*** A connection type between a single PC and Azure VPN Gateway running over the internet. Sometimes referred to as a “VPN Tunnel,” this on-demand connection is initiated by the user and secured by using a certificate. The connection uses the SSTP protocol on port 443 to provide encrypted communication over the internet between the PC and the VNet. P2S connections are useful for remote employees or those that only want to establish connectivity when they need it. 
+
+![point-to-site](./Images/OnPrem/point-to-site.png "point-to-site")
 
 ### Monitor on-premises connectivity  
 
-### create and configure Azure ExpressRoute  
+### Create and configure Azure ExpressRoute  
+ExpressRoute connections use a private, dedicated connection through a third-party connectivity provider. The private connection extends an on-premises network into Azure.
 
-### configure Azure Virtual WAN Monitor and back up  
+This architecture is suitable for hybrid applications running large-scale, mission-critical workloads that require a high degree of scalability.
+
+![expressroute](./Images/OnPrem/expressroute.png "expressroute")
+
+### Configure Azure Virtual WAN Monitor and back up  
+Azure Virtual WAN is a networking service that brings many networking, security, and routing functionalities together to provide a single operational interface. Some of the main features include:
+- Branch connectivity.
+- Site-to-site VPN connectivity.
+- Remote user VPN connectivity (point-to-site).
+- Private connectivity (ExpressRoute).
+- Intra-cloud connectivity (transitive connectivity for virtual networks).
+- VPN ExpressRoute inter-connectivity.
+- Routing, Azure Firewall, and encryption for private connectivity.
+
+The Virtual WAN architecture is a hub and spoke architecture with scale and performance built in for branches (VPN/SD-WAN devices), users (Azure VPN/OpenVPN/IKEv2 clients), ExpressRoute circuits, and virtual networks. It enables a global transit network architecture, where the cloud hosted network 'hub' enables transitive connectivity between endpoints that may be distributed across different types of 'spokes'.
+
+
+![virtualwan](./Images/OnPrem/virtualwan.png "virtualwan")
