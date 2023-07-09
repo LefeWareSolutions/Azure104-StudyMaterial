@@ -1,4 +1,4 @@
-$subscriptionName = 'LefeWareSolutions-poc'
+$subscriptionName = 'LefeWareSolutions-POC'
 
 # Connect to Azure and set Subscription
 Connect-AzAccount
@@ -8,7 +8,7 @@ Set-AzContext $context
 
 # Declare variables
 $VNetName  = "VNet1"
-$RG = "TestRG1"
+$RG = "lws-poc-vpntest-rg"
 $Location = "East US"
 $FESubName = "FrontEnd"
 $VNetPrefix1 = "10.1.0.0/16"
@@ -45,8 +45,8 @@ $vnet | Set-AzVirtualNetwork
 
 
 # Request a public IP address
-$gwpip= New-AzPublicIpAddress -Name $GWIPName -ResourceGroupName $RG -Location $Location `
--AllocationMethod Dynamic
+$gwpip= New-AzPublicIpAddress -Name $GWIPName -ResourceGroupName $RG -Location $Location -AllocationMethod Dynamic
+
 # Create the gateway IP address configuration
 $vnet = Get-AzVirtualNetwork -Name $VNetName -ResourceGroupName $RG
 $subnet = Get-AzVirtualNetworkSubnetConfig -Name 'GatewaySubnet' -VirtualNetwork $vnet
@@ -62,6 +62,7 @@ New-AzVirtualNetworkGateway -Name $GWName -ResourceGroupName $RG `
 # Add the VPN client address pool
 $Gateway = Get-AzVirtualNetworkGateway -ResourceGroupName $RG -Name $GWName
 Set-AzVirtualNetworkGateway -VirtualNetworkGateway $Gateway -VpnClientAddressPool $VPNClientAddressPool
+
 # Create a self-signed root certificate
 $cert = New-SelfSignedCertificate -Type Custom -KeySpec Signature `
 -Subject "CN=P2SRootCert" -KeyExportPolicy Exportable `
@@ -77,3 +78,5 @@ $p2srootcert = New-AzVpnClientRootCertificate -Name $P2SRootCertName -PublicCert
 Add-AzVpnClientRootCertificate -VpnClientRootCertificateName $P2SRootCertName `
 -VirtualNetworkGatewayname $GWName `
 -ResourceGroupName $RG -PublicCertData $CertBase64
+
+sfmarc3cusstgdmessagings

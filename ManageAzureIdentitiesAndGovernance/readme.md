@@ -48,7 +48,7 @@ Using Azure AD, a group's settings can also be edited, including updating its na
 
  
 ### Manage device settings 
-Azure Active Directory (Azure AD) provides a central place to manage your organizations device identities and monitor related event information by going to Azure Active Directory > Devices 
+Azure Active Directory (Azure AD) provides a central place to manage your organizations device identities and monitor related event information by going to Azure Active Directory > Devices \
 ![DeviceSettings](./Images/DeviceSettings.png "DeviceSettings")
  
 In the devices overview, the number of total devices, stale devices, noncompliant devices, and unmanaged devices can be managed. There are also links to Intune, Conditional Access, BitLocker keys, and basic monitoring. 
@@ -57,92 +57,55 @@ In the devices overview, the number of total devices, stale devices, noncomplian
 ### Perform bulk user updates  
 Azure AD supports bulk user create and delete operations and supports downloading lists of users as a csv. 
 
- 
-
 To create users in bulk 
+1. As a “User administrator” in the organization. Navigate to Azure AD >  Users > Bulk create. 
+2. On the Bulk create user page, select Download to receive a valid comma-separated values (CSV) file of user properties. 
+![csvImport](./Images/csvImport.png "csvImport")
+3. Open the CSV file and add a line for each user you want to create. The only required values are Name, User principal name, Initial password and Block sign in (Yes/No). Then save the file. \
+![csvImport2](./Images/csvImport2.png "csvImport2")
+4. On the Bulk create user page, under Upload your CSV file, browse to the file. When you select the file and click Submit, validation of the CSV file starts. 
+5. After the file contents are validated, you’ll see File uploaded successfully. If there are errors, you must fix them before you can submit the job. 
+6. When your file passes validation, select Submit to start the Azure bulk operation that imports the new users. 
+7. When the import operation completes, you'll see a notification of the bulk operation job status. 
+8. You can see the status of all of your pending bulk requests in the Bulk operation results page. 
 
-As a “User administrator” in the organization. Navigate to Azure AD >  Users > Bulk create. 
 
-On the Bulk create user page, select Download to receive a valid comma-separated values (CSV) file of user properties. 
 
- 
-
-Open the CSV file and add a line for each user you want to create. The only required values are Name, User principal name, Initial password and Block sign in (Yes/No). Then save the file. 
-
- 
-
-On the Bulk create user page, under Upload your CSV file, browse to the file. When you select the file and click Submit, validation of the CSV file starts. 
-
-After the file contents are validated, you’ll see File uploaded successfully. If there are errors, you must fix them before you can submit the job. 
-
-When your file passes validation, select Submit to start the Azure bulk operation that imports the new users. 
-
-When the import operation completes, you'll see a notification of the bulk operation job status. 
-
-You can see the status of all of your pending bulk requests in the Bulk operation results page. 
-
- 
-
-Manage guest accounts  
-
+### Manage guest accounts  
 Azure AD business-to-business (B2B) collaboration is a feature within External Identities that allows inviting guest users to collaborate with the current organization. B2B collaboration, allows for securely sharing a company’s applications and services with guest users from any other organization even if they are not using Azure AD. It also allows the guest to use their own credentials. 
 
- 
-
 To add guest users to an organization in the Azure portal: 
-
-Click + New User in Azure AD 
-
-Instead of creating a new user, select “Invite user” 
-
-Select groups & roles to assign to user just like any other user 
-
-User will be sent an invitation for which they will accept and provide a redemption page 
-
+1. Click + New User in Azure AD 
+2. Instead of creating a new user, select “Invite user” 
+3. Select groups & roles to assign to user just like any other user 
+4. User will be sent an invitation for which they will accept and provide a redemption page \
+![csvImport2](./Images/ADObjects/GuestPermissions.png "csvImport2")
  
-
 User can go to https://myaccount.microsoft.com/organizations to see what apps and orgs they are part of 
 
- 
-
-Configure Azure AD join  
-
+### Configure Azure AD join  
 Azure AD joined devices are signed in to using an organizational Azure AD account. Access to resources in the organization can be further limited based on that Azure AD account and Conditional Access policies applied to the device identity. 
 
 Azure AD Join provide a means to enforce organization-required configurations like requiring storage to be encrypted, password complexity, software installations, and software updates. Administrators can make organization applications available to Azure AD joined etc. 
 
 Azure AD join can be accomplished using  
+- Self-service options like the Out of Box Experience (OOBE),  
+- Bulk enrollment 
+- Windows Autopilot. 
 
-Self-service options like the Out of Box Experience (OOBE),  
 
-Bulk enrollment 
-
-Windows Autopilot. 
-
- 
-
-Configure self-service password reset (SSPR) 
-
+### Configure self-service password reset (SSPR) 
 Enables users to reset their passwords without contacting IT staff for help. If Azure AD locks a user's account or they forget their password, the user can unblock themselves and continue working, thus reducing the non-productive time and high support costs for most common password-related issues. 
 
 Azure AD lets you enable SSPR for None, Selected, or All users: 
-
-In Azure Active Directory, then select Password reset from the menu on the left side. 
-
-From the Properties page, under the option Self service password reset enabled, select Select group 
-
-Browse for and select your Azure AD group, like SSPR-Test-Group, then choose Select. 
-
- 
+1. In Azure Active Directory, then select Password reset from the menu on the left side. 
+2. From the Properties page, under the option Self service password reset enabled, select Select group 
+3. Browse for and select your Azure AD group, like SSPR-Test-Group, then choose Select. 
 
 With SSPR enabled and set up, test the SSPR process as follows: 
-
-Ensure user has authentication methods contact information registered . 
-
-Open a new browser window in InPrivate or incognito mode, and browse to https://aka.ms/sspr. 
-
-Enter your non-administrator test users' account information, like phone number, the characters from the CAPTCHA, and then select Next. 
-
-Follow the verification steps to reset your password. When finished, you'll receive an email notification that your password was reset 
+1. Ensure user has authentication methods contact information registered . 
+2. Open a new browser window in InPrivate or incognito mode, and browse to https://aka.ms/sspr. 
+3. Enter your non-administrator test users' account information, like phone number, the characters from the CAPTCHA, and then select Next. 
+4. Follow the verification steps to reset your password. When finished, you'll receive an email notification that your password was reset 
 
  
