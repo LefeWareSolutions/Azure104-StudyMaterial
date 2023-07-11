@@ -20,14 +20,13 @@ Creating and implementing a policy in Azure Policy begins with creating a policy
 -	Not allowed resource types (Deny)
 
 To assign a custom policy follow these steps:
-
 1.	From the Policy page, select Assignments on the left side of the Azure Policy page. 
 2.	Select Assign Policy from the top of the Policy - Assignments page.
 3.	On the Assign Policy page:
     - Set the Scope (I.e., subscription or resourcegroup). A scope determines what resources or grouping of resources the policy assignment gets enforced on. Then use the Select button at the bottom of the Scope page.
     - Select resource exclusions
-	  - Select the Policy definition ellipsis to open the list of available definitions. Azure Policy comes with built-in policy definitions you can use. Enforce tag and its value
-	  - The Assignment name is automatically populated with the policy name you selected, but you can change it. 
+	 - Select the Policy definition ellipsis to open the list of available definitions. Azure Policy comes with built-in policy definitions you can use. Enforce tag and its value
+	 - The Assignment name is automatically populated with the policy name you selected, but you can change it. 
 	  - Enable or disable this policy
  
 4.	Leave Create a Managed Identity unchecked. This box must be checked when the policy or initiative includes a policy with either the deployIfNotExists or modify effect.

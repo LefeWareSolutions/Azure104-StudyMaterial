@@ -1,6 +1,6 @@
-$subscriptionName = 'LefeWareSolutions-Development'
+$subscriptionName = 'LefeWareSolutions-POC'
 $location = "eastus"
-$resourceGroupName = "Azure300"
+$resourceGroupName = "Azure104"
 
 
 Connect-AzAccount

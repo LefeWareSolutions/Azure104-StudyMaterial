@@ -2,7 +2,7 @@ az login
 
 #Set Subscription
 az account list
-az account set --subscription "LefeWareSolutions-Development"
+az account set --subscription "LefeWareSolutions-POC"
 
 
 # When you create custom roles, it is important to know all the possible operations from the resource providers. 

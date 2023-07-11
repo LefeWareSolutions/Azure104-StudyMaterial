@@ -1,4 +1,4 @@
-$subscriptionName = 'LefeWareSolutions-Development'
+$subscriptionName = 'LefeWareSolutions-POC'
 $resourceGroupName = "VNET-Peering-Group"
 $location = "eastus"
 

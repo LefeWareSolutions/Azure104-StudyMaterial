@@ -2,7 +2,7 @@ az login
 
 #Set Subscription
 az account list
-az account set --subscription "LefeWareSolutions-Development"
+az account set --subscription "LefeWareSolutions-POC"
 
 #Create Resource Group
 az group create --name myResourceGroup --location eastus

@@ -2,7 +2,7 @@ az login
 
 #Set Subscription
 az account list
-az account set --subscription "LefeWareSolutions-Development"
+az account set --subscription "LefeWareSolutions-POC"
 
 #List resize option
 az vm list-vm-resize-options --resource-group DEV-LefeWareLearning-WebApp --name DEV-LefeWareLearning-VM --output table

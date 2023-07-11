@@ -1,5 +1,5 @@
 
-$subscriptionName = 'LefeWareSolutions-Development'
+$subscriptionName = 'LefeWareSolutions-POC'
 $location = "eastus"
 $resourceGroupName = "DEV-LefeWareLearning-WebApp"
 
