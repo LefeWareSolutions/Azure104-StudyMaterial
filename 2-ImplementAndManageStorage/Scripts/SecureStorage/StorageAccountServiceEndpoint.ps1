@@ -23,32 +23,29 @@ $vnet = New-AzVirtualNetwork -ResourceGroupName $resourceGroupName `
   -Location $location `
   -Name $virtualNetworkName `
   -AddressPrefix "10.0.0.0/16"
+
 $subnetConfig = Add-AzVirtualNetworkSubnetConfig -Name $subnetName `
   -AddressPrefix "10.0.1.0/24" `
-  -VirtualNetwork $vnet
+  -VirtualNetwork $vnet `
+  -ServiceEndpoint "Microsoft.Storage"
 $vnet | Set-AzVirtualNetwork
 
-# Create Storage account
-New-AzStorageAccount -ResourceGroupName $resourceGroupName `
+# Create Storage account and enable communication from above subnet
+$storageAccount = New-AzStorageAccount -ResourceGroupName $resourceGroupName `
   -Name $storageAccountName `
   -Location $location `
   -SkuName Standard_LRS `
   -Kind StorageV2 `
   -AccessTier Hot
 
-# Set the storage account to use the service endpoint
-Set-AzStorageAccount -ResourceGroupName $resourceGroupName `
-  -Name $storageAccountName `
-  -EnableServiceEndpoint $true
-  
-$serviceEndpoint = New-AzDelegation -Name $endpointName -ServiceName "Microsoft.Storage"
-$subnetConfig.ServiceEndpointPolicies.Add($serviceEndpoint)
 
-# Set the updated subnet configuration back to the virtual network
-$vnet | Set-AzVirtualNetwork
+# Add a virtual network rule to the storage account
+$networkRuleSet = $storageAccount.NetworkRuleSet
+$networkRuleSet.DefaultAction = "Deny"
+$networkRuleSet.VirtualNetworkRules.Add((New-Object -TypeName Microsoft.Azure.Management.Storage.Models.VirtualNetworkRule -ArgumentList $subnetConfig.Id, "true"))
+$storageAccount | Update-AzStorageAccountNetworkRuleSet -NetworkRuleSet $networkRuleSet
+
  
-#Delete Storage account
-Remove-AzStorageAccount `
-    -Name $storageAccountName `
-    -ResourceGroupName $resourceGroupName
+#Delete Resource Group
+Remove-AzResourceGroup -Name $resourceGroupName -Force
 

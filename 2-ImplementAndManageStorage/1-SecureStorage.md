@@ -9,46 +9,39 @@ Access to any Azure storage account is prohibited by default. Access is given by
 For additional control over storage accounts, we can also limit access to storage account to requests originating from specified IP addresses, IP ranges or from a list of subnets in an Azure VNet. An application that accesses a storage account when network rules are in effect still requires proper authorization for the request.
 
 ### Service Endpoint
+When a service endpoint for Azure Storage is enabled  in the context of a subnet virtual network, traffic from that subnet to the Azure storage service always traverses over the Microsoft Azure backbone network, irrespective of the source or destination. This eliminates the need to expose the Azure service to the public internet.
+
+ ![ServiceEndpointStorage](./Images/SecureStorage/ServiceEndpointStorage.png "ServiceEndpointStorage")  
+
 To set up an Azure Storage account inside a VNet:
 1.	Navigate to the storage account and select “Firewalls and Virtual Network Settings” blade.
-2.	To secure your storage account, you should first configure the rule to deny access to traffic from all networks (including internet traffic) on the public endpoint, by default. This can be done by selecting “Selected Networks” radio button
+2.	To secure the storage account, configure the rule to deny access to traffic from all networks (including internet traffic) on the public endpoint, by default. This can be done by selecting “Selected Networks” radio button
 3.	Click “Add existing virtual network” and chose the VNet and Subnet for which you wish to limit access to the storage account.
 4.	This will automatically create a “Service Endpoint” on the VNet
 5.	It is also possible to add Ip Address/Ranges from other clients outside the VNet.
 *In the firewalls and virtual network tab there is also an option called “Allow trusted Microsoft services to access this storage account” which is turned on by default. This allows connectivity to Azure Monitor Backups and Event Hubs.
 
  ![StorageNetwork](./Images/SecureStorage/StorageNetwork.png "StorageNetwork")  
+ ![SubnetServiceEndpoint](./Images/SecureStorage/SubnetServiceEndpoint.png "SubnetServiceEndpoint")  
 
 
 ### Private Endpoint
 Even if using firewall rules, storage accounts will still have a **public endpoint that is accessible through the internet**. You can instead create Private Endpoints for your storage account, which assigns a private IP address from your VNet to the storage account, and secures all traffic between your VNet and the storage account over a private link.
+ ![StoragePrivateEndpoint](./Images/SecureStorage/StoragePrivateEndpoint.jpg "StoragePrivateEndpoint")  
 
-## Create and configure storage accounts 
-An Azure storage account contains all Azure Storage data objects: blobs, files, queues, tables, and disks. The storage account provides a unique namespace for your Azure Storage data that is accessible from anywhere in the world over HTTP or HTTPS. A storage account name must be: 
--	All lower case, 
--	3-24 chars 
--	Contain only alphanumeric characters
--	Be globally unique
 
-Azure Storage offers several types of storage accounts. Each type supports different features and has its own pricing model. The types of storage accounts are:
--	General-purpose v2 accounts: Basic storage account type for blobs, files, queues, and tables. Recommended for most scenarios using Azure Storage.
--	General-purpose v1 accounts: Legacy account type for blobs, files, queues, and tables.
--	BlockBlobStorage accounts: Storage accounts with premium performance characteristics for block blobs and append blobs. Recommended for scenarios with high transaction rates, or scenarios that use smaller objects or require consistently low storage latency.
--	FileStorage accounts: Files-only storage accounts with premium performance characteristics. Recommended for enterprise or high performance scale applications.
--	BlobStorage accounts: Legacy Blob-only storage accounts. Use general-purpose v2 accounts instead when possible.
-For storage accounts, Microsoft charges for both amount of data stored in the account and outbound (egress) data transfer for every REST API transaction.
-
-Generate shared access signature (SAS) tokens
+## Generate shared access signature (SAS) tokens
 A Shared Access Signature (SAS) represents a way to grant limited, time bound access to individual storage account objects. Azure Storage supports three types of shared access signatures:
-•	User Delegation SAS: Secured with Azure AD credentials instead of the master key and also by the permissions specified for the SAS. A user delegation SAS applies to Blob storage only.
-•	Account SAS: An account SAS is secured with the storage account key. An account SAS delegates access to resources in one or more of the storage services
-•	Service SAS: Secured with the storage account key. A service SAS delegates access to a resource in only one of the Azure Storage services: Blob storage, Queue storage, Table storage, or Azure Files.
+- User Delegation SAS: Secured with Azure AD credentials instead of the master key and also by the permissions specified for the SAS. A user delegation SAS applies to Blob storage only.
+- Account SAS: An account SAS is secured with the storage account key. An account SAS delegates access to resources in one or more of the storage services
+- Service SAS: Secured with the storage account key. A service SAS delegates access to a resource in only one of the Azure Storage services: Blob storage, Queue storage, Table storage, or Azure Files.
 A SAS is essentially a URL that consists of the following components:
-•	Protocol: HTTP or HTTPS
-•	Address: Fully qualified address to the storage account
-•	Permissions: CRUD operations 
-•	Time Interval: As long as the time interval has not expired, anyone on earth can use the SAS URI.
-•	Digital Signature
+- Protocol: HTTP or HTTPS
+- Address: Fully qualified address to the storage account
+- Permissions: CRUD operations 
+- Time Interval: As long as the time interval has not expired, anyone on earth can use the SAS URI.
+- Digital Signature
+
 To Create a SAS:
 1.	In storage explorer, browse to the assets container and locate the container or file you with to create the SAS for
 2.	Right click an object and select “Get Shared Access Signature” from the menu: 
@@ -56,7 +49,7 @@ To Create a SAS:
 The resulting URL will look like the following where sig represents a digital signature:
 https://lwcmedia.blob.core.windows.net/insights-logs-applicationgatewayaccesslog?sv=2019-10-10&st=2020-10-13T00%3A29%3A07Z&se=2020-10-13T00%3A30%3A00Z&sr=c&sp=rl&sig=QxC20mJ425bF2kV4UTz2fIu7PbMnjj1GAysUygtj3Jg%3D
 
-Manage access keys
+# Manage access keys
 Azure generates two 512-bit storage account access keys to authorize access to data in a storage account via Shared Key authorization. It is recommended to use Azure Key Vault to manage and rotate access keys and also so that application can securely access keys in Key Vault, thus avoiding storing them within application code. 
 
  
